@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 16:26:02 by sawang            #+#    #+#             */
-/*   Updated: 2023/04/21 19:24:24 by sawang           ###   ########.fr       */
+/*   Updated: 2023/04/23 21:57:16 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,36 +44,52 @@ typedef enum e_status
 	DEAD
 }				t_status;
 
-typedef struct s_philo
+struct s_input
+{
+	unsigned int		num_of_philos;
+	unsigned int		time_to_die;
+	unsigned int		time_to_eat;
+	unsigned int		time_to_sleep;
+	unsigned int		num_of_must_eat;
+};
+
+struct s_philo
 {
 	/* data */
 	unsigned int	id;
+	// action??
 	pthread_mutex_t	*mutex_l_fork;
 	pthread_mutex_t	*mutex_r_fork;
 	unsigned long	last_eat;
 	unsigned int	eat_count;
 	struct s_table	*table;
 	// t_input			input;
+};
 
-}				t_philo;
-
-typedef struct s_table
+struct s_philo_holding
 {
-	/* data */
-	// t_input			input;
-	unsigned int	num_of_philos;
-	unsigned int	time_to_die;
-	unsigned int	time_to_eat;
-	unsigned int	time_to_sleep;
-	unsigned int	num_of_must_eat;
-	t_philo			*philos;
+	struct s_philo	*philos;
+	pthread_t		*philo_thrs;
 	pthread_mutex_t	*mutex_forks;
-	unsigned long	start_time;
-	pthread_mutex_t	mutex_print;
-	pthread_mutex_t	mutex_dead;
-	bool			dead;
-	// pthread_mutex_t	eat_count;
-}				t_table;
+};
+
+struct s_traffic_light
+{
+	/* data *///for start and kill
+	pthread_mutex_t	mutex_start;
+	bool			start;
+	pthread_mutex_t	mutex_kill;
+	bool			kill;
+};
+
+struct s_table
+{
+	struct s_input			input;
+	struct s_philo_holding	philo_holding;
+	pthread_mutex_t			mutex_print;
+	pthread_t				waiter;
+	struct s_traffic_light	traffic_light;
+};
 
 
 #endif
