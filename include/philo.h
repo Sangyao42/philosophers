@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 16:26:02 by sawang            #+#    #+#             */
-/*   Updated: 2023/04/23 21:57:16 by sawang           ###   ########.fr       */
+/*   Updated: 2023/04/24 16:32:33 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,14 +35,16 @@
 // 	unsigned int	num_of_must_eat;
 // }				t_input;
 
-typedef enum e_status
+typedef unsigned long	t_milliseconds;
+
+typedef enum e_philo_status
 {
 	THINKING,
 	EATING,
 	SLEEPING,
 	FORKING,
 	DEAD
-}				t_status;
+}				t_philo_status;
 
 struct s_input
 {
@@ -55,15 +57,14 @@ struct s_input
 
 struct s_philo
 {
-	/* data */
 	unsigned int	id;
-	// action??
 	pthread_mutex_t	*mutex_l_fork;
 	pthread_mutex_t	*mutex_r_fork;
-	unsigned long	last_eat;
-	unsigned int	eat_count;
+	// status
+	t_philo_status	status;
+	t_millisecondes	last_eat;
+	unsigned int	eat_cnt;
 	struct s_table	*table;
-	// t_input			input;
 };
 
 struct s_philo_holding
@@ -73,13 +74,28 @@ struct s_philo_holding
 	pthread_mutex_t	*mutex_forks;
 };
 
+typedef enum e_start_status
+{
+	UNINITIALIZED,
+	INITIALIZED,
+	NOT_STARTED,
+	START
+}			t_start_status;
+
+typedef enum e_kill_status
+{
+	UNINITIALIZED,
+	INITIALIZED,
+	ALIVE,
+	KILL
+}			t_kill_status;
+
 struct s_traffic_light
 {
-	/* data *///for start and kill
 	pthread_mutex_t	mutex_start;
-	bool			start;
+	t_start_status	start;
 	pthread_mutex_t	mutex_kill;
-	bool			kill;
+	t_kill_status	kill;
 };
 
 struct s_table
@@ -93,8 +109,8 @@ struct s_table
 
 
 #endif
-table.dead;
-mutex_lock(&philo->table->dead_signal);
-philo.table.dead_signal = true;
-philo.table.time_to_die
-mutex_unlock(&philo->table->dead_signal);
+// table.dead;
+// mutex_lock(&philo->table->dead_signal);
+// philo.table.dead_signal = true;
+// philo.table.time_to_die
+// mutex_unlock(&philo->table->dead_signal);
