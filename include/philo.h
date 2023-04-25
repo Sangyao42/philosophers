@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 16:26:02 by sawang            #+#    #+#             */
-/*   Updated: 2023/04/25 16:02:44 by sawang           ###   ########.fr       */
+/*   Updated: 2023/04/25 22:42:17 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@
 # include <stdbool.h>
 # include <stdlib.h>
 # include <limits.h>
+# include <stdio.h>
 
 /**
  * mutex for print
@@ -77,16 +78,16 @@ struct s_philo_holding
 
 typedef enum e_start_status
 {
-	UNINITIALIZED,
-	INITIALIZED,//?
+	UNINITIALIZED_START,
+	INITIALIZED_START,
 	NOT_STARTED,
 	START
 }			t_start_status;
 
 typedef enum e_kill_status
 {
-	UNINITIALIZED,
-	INITIALIZED,//?
+	UNINITIALIZED_KILL,
+	INITIALIZED_KILL,
 	ALIVE,
 	KILL
 }			t_kill_status;
@@ -108,9 +109,54 @@ struct s_table
 	struct s_traffic_light	traffic_light;
 };
 
+/**
+ * input
+*/
+bool			set_input(struct s_table *table, int argc, char *argv[]);
+
+/**
+ * init
+*/
+bool			set_table(struct s_table *table, int argc, char *argv[]);
+
+/**
+ * death
+*/
+void			*death_routine(struct s_table *table);
+
+/**
+ * philosophers
+*/
+bool			philo_dining_simulation(struct s_table *table);
+void			philo_activity(struct s_philo *philo);
+void			philo_threads_join(struct s_table *table, int i);
+/**
+ * lonly philosopher
+*/
+int				lonely_philo_simulator(struct s_table *table);
+
+/**
+ * error_handler
+*/
+void			mutex_destroy_and_free(struct s_table *table, \
+				unsigned int philo_cnt);
+
+/**
+ * timer
+*/
+t_milliseconds	time_now(void);
+t_milliseconds	time_passed(t_milliseconds start_time);
+void			sleep_better(t_milliseconds should_sleep);
+
+/**
+ * printer
+*/
+void			print_status(struct s_philo *philo, char *doing);
+
+/**
+ * utils
+*/
+void			*ft_calloc(size_t count, size_t size);
+unsigned long	philo_atoi(const char *str);
+
 #endif
-// table.dead;
-// mutex_lock(&philo->table->dead_signal);
-// philo.table.dead_signal = true;
-// philo.table.time_to_die
-// mutex_unlock(&philo->table->dead_signal);

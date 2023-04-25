@@ -6,32 +6,13 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 15:57:21 by sawang            #+#    #+#             */
-/*   Updated: 2023/04/25 16:25:59 by sawang           ###   ########.fr       */
+/*   Updated: 2023/04/25 22:41:16 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	philo_activity(struct s_philo *philo)
-{
-	if (philo->status == THINKING)
-	{
-		philo_eat(philo);
-		return ;
-	}
-	if (philo->status == EATING)
-	{
-		philo_sleep(philo);
-		return ;
-	}
-	if (philo->status == SLEEPING)
-	{
-		philo_think(philo);
-		return ;
-	}
-}
-
-void	philo_eat(struct s_philo *philo)
+static void	philo_eat(struct s_philo *philo)
 {
 	if (philo->id % 2 == 1)
 	{
@@ -65,15 +46,34 @@ void	philo_eat(struct s_philo *philo)
 	}
 }
 
-void	philo_sleep(struct s_philo *philo)
+static void	philo_sleep(struct s_philo *philo)
 {
 	print_status(philo, "is sleeping");
 	sleep_better(philo->table->input.time_to_sleep);
 	philo->status = SLEEPING;
 }
 
-void	philo_think(struct s_philo *philo)
+static void	philo_think(struct s_philo *philo)
 {
 	print_status(philo, "is thinking");
 	philo->status = THINKING;
+}
+
+void	philo_activity(struct s_philo *philo)
+{
+	if (philo->status == THINKING)
+	{
+		philo_eat(philo);
+		return ;
+	}
+	if (philo->status == EATING)
+	{
+		philo_sleep(philo);
+		return ;
+	}
+	if (philo->status == SLEEPING)
+	{
+		philo_think(philo);
+		return ;
+	}
 }

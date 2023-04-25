@@ -6,13 +6,13 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 18:15:01 by sawang            #+#    #+#             */
-/*   Updated: 2023/04/25 18:50:06 by sawang           ###   ########.fr       */
+/*   Updated: 2023/04/25 22:40:56 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-bool	check_dead(struct s_philo *philo)
+static bool	check_dead(struct s_philo *philo)
 {
 	unsigned int	i;
 
@@ -27,7 +27,7 @@ bool	check_dead(struct s_philo *philo)
 	{
 		if (philo->table->philo_holding.philos[i].eat_cnt < \
 			philo->table->input.num_of_must_eat \
-			&& philo->table->input.num_of_must_eat != -1)
+			&& philo->table->input.num_of_must_eat != UINT_MAX)
 			return (false);
 		i++;
 	}
@@ -55,7 +55,7 @@ void	*death_routine(struct s_table *table)
 			{
 				table->traffic_light.kill = KILL;
 				pthread_mutex_unlock(&table->traffic_light.mutex_kill);
-				return ;// return (i);
+				return (NULL);// return (i);
 			}
 			pthread_mutex_unlock(&table->traffic_light.mutex_kill);
 			i++;

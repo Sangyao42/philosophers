@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 21:01:58 by sawang            #+#    #+#             */
-/*   Updated: 2023/04/25 19:10:06 by sawang           ###   ########.fr       */
+/*   Updated: 2023/04/25 22:41:10 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	main(int argc, char *argv[])
 		return (EXIT_FAILURE);
 	if (table.input.num_of_philos == 1)
 	{
-		if (lonely_philo_simulator(table.input.time_to_die) == EXIT_FAILURE)
+		if (lonely_philo_simulator(&table) == EXIT_FAILURE)
 			return (EXIT_FAILURE);
 		return (EXIT_SUCCESS);
 	}
