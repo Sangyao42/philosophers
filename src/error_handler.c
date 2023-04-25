@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   error_handler_when_init.c                          :+:      :+:    :+:   */
+/*   error_handler.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 12:14:04 by sawang            #+#    #+#             */
-/*   Updated: 2023/04/24 14:08:49 by sawang           ###   ########.fr       */
+/*   Updated: 2023/04/25 18:14:55 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-void	mutex_destroy_and_free_init_wrong(struct s_table *table, \
+void	mutex_destroy_and_free(struct s_table *table, \
 	unsigned int philo_cnt)
 {
 	int	i;

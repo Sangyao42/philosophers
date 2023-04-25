@@ -1,30 +1,21 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   printer.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/04/23 21:01:58 by sawang            #+#    #+#             */
-/*   Updated: 2023/04/25 19:10:06 by sawang           ###   ########.fr       */
+/*   Created: 2023/04/25 15:42:42 by sawang            #+#    #+#             */
+/*   Updated: 2023/04/25 16:02:25 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	main(int argc, char *argv[])
+void	print_status(struct s_philo *philo, char *doing)
 {
-	struct s_table	table;
-
-	if (set_table(&table, argc, argv) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	if (table.input.num_of_philos == 1)
-	{
-		if (lonely_philo_simulator(table.input.time_to_die) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-		return (EXIT_SUCCESS);
-	}
-	if (philo_dining_simulation(&table) == EXIT_FAILURE)
-		return (EXIT_FAILURE);
-	return (EXIT_SUCCESS);
+	pthread_mutex_lock(&philo->table->mutex_print);
+	ft_printf("%lu %d %s\n", time_passed(philo->start_time), \
+		philo->id, doing);
+	pthread_mutex_unlock(&philo->table->mutex_print);
 }

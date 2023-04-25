@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 16:26:02 by sawang            #+#    #+#             */
-/*   Updated: 2023/04/24 16:32:33 by sawang           ###   ########.fr       */
+/*   Updated: 2023/04/25 16:02:44 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,16 +42,16 @@ typedef enum e_philo_status
 	THINKING,
 	EATING,
 	SLEEPING,
-	FORKING,
-	DEAD
+	// FORKING,?
+	DIED
 }				t_philo_status;
 
 struct s_input
 {
 	unsigned int		num_of_philos;
-	unsigned int		time_to_die;
-	unsigned int		time_to_eat;
-	unsigned int		time_to_sleep;
+	t_milliseconds		time_to_die;
+	t_milliseconds		time_to_eat;
+	t_milliseconds		time_to_sleep;
 	unsigned int		num_of_must_eat;
 };
 
@@ -61,8 +61,9 @@ struct s_philo
 	pthread_mutex_t	*mutex_l_fork;
 	pthread_mutex_t	*mutex_r_fork;
 	// status
+	t_milliseconds	start_time;
 	t_philo_status	status;
-	t_millisecondes	last_eat;
+	t_milliseconds	last_eat;
 	unsigned int	eat_cnt;
 	struct s_table	*table;
 };
@@ -77,7 +78,7 @@ struct s_philo_holding
 typedef enum e_start_status
 {
 	UNINITIALIZED,
-	INITIALIZED,
+	INITIALIZED,//?
 	NOT_STARTED,
 	START
 }			t_start_status;
@@ -85,7 +86,7 @@ typedef enum e_start_status
 typedef enum e_kill_status
 {
 	UNINITIALIZED,
-	INITIALIZED,
+	INITIALIZED,//?
 	ALIVE,
 	KILL
 }			t_kill_status;
@@ -103,10 +104,9 @@ struct s_table
 	struct s_input			input;
 	struct s_philo_holding	philo_holding;
 	pthread_mutex_t			mutex_print;
-	pthread_t				waiter;
+	pthread_t				death;
 	struct s_traffic_light	traffic_light;
 };
-
 
 #endif
 // table.dead;
