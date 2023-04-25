@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 15:57:21 by sawang            #+#    #+#             */
-/*   Updated: 2023/04/25 22:41:16 by sawang           ###   ########.fr       */
+/*   Updated: 2023/04/25 22:57:35 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@ static void	philo_eat(struct s_philo *philo)
 		philo->eat_cnt++;
 		philo->last_eat = time_passed(philo->start_time);
 		pthread_mutex_unlock(&philo->table->traffic_light.mutex_kill);
+		print_status(philo, "is eating");
 		sleep_better(philo->table->input.time_to_eat);
 		pthread_mutex_unlock(philo->mutex_r_fork);
 		pthread_mutex_unlock(philo->mutex_l_fork);
@@ -39,6 +40,7 @@ static void	philo_eat(struct s_philo *philo)
 		philo->eat_cnt++;
 		philo->last_eat = time_passed(philo->start_time);
 		pthread_mutex_unlock(&philo->table->traffic_light.mutex_kill);
+		print_status(philo, "is eating");
 		sleep_better(philo->table->input.time_to_eat);
 		pthread_mutex_unlock(philo->mutex_l_fork);
 		pthread_mutex_unlock(philo->mutex_r_fork);
