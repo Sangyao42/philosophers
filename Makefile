@@ -1,7 +1,8 @@
 NAME := philo
-CC := cc
+CC := gcc
 CFLAGS := -Wall -Werror -Wextra
 CFLAGS += -fsanitize=address
+# CFLAGS += -fsanitize=thread -g
 SRC_DIR := src/
 OBJ_DIR := obj/
 SRCS := death.c \

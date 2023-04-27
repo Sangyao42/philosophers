@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 16:26:02 by sawang            #+#    #+#             */
-/*   Updated: 2023/04/25 22:42:17 by sawang           ###   ########.fr       */
+/*   Updated: 2023/04/27 16:09:22 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,7 @@ struct s_table
 	struct s_input			input;
 	struct s_philo_holding	philo_holding;
 	pthread_mutex_t			mutex_print;
+	pthread_mutex_t			mutex_check_eat;
 	pthread_t				death;
 	struct s_traffic_light	traffic_light;
 };
@@ -129,7 +130,8 @@ void			*death_routine(struct s_table *table);
 */
 bool			philo_dining_simulation(struct s_table *table);
 void			philo_activity(struct s_philo *philo);
-void			philo_threads_join(struct s_table *table, int i);
+void			philo_threads_join(struct s_table *table, \
+	unsigned int philo_thr_cnt);
 /**
  * lonly philosopher
 */
@@ -138,8 +140,10 @@ int				lonely_philo_simulator(struct s_table *table);
 /**
  * error_handler
 */
+void			mutex_destroy_and_free_when_init(struct s_table *table, \
+	unsigned int philo_cnt);
 void			mutex_destroy_and_free(struct s_table *table, \
-				unsigned int philo_cnt);
+	unsigned int philo_cnt);
 
 /**
  * timer
