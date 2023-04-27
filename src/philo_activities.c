@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 15:57:21 by sawang            #+#    #+#             */
-/*   Updated: 2023/04/26 15:43:31 by sawang           ###   ########.fr       */
+/*   Updated: 2023/04/27 22:28:19 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,6 @@ static void	philo_odd_eat(struct s_philo *philo)
 	pthread_mutex_lock(&philo->table->mutex_check_eat);
 	philo->eat_cnt += 1;
 	philo->last_eat = time_now();
-	// printf("philo %d last_eat: %lu\n", philo->id, time_passed(philo->start_time));
 	pthread_mutex_unlock(&philo->table->mutex_check_eat);
 	sleep_better(philo->table->input.time_to_eat);
 	pthread_mutex_unlock(philo->mutex_r_fork);
@@ -76,7 +75,6 @@ static void	philo_even_eat(struct s_philo *philo)
 	pthread_mutex_lock(&philo->table->mutex_check_eat);
 	philo->eat_cnt += 1;
 	philo->last_eat = time_now();
-	// printf("philo->last_eat: %lu\n", time_passed(philo->start_time));
 	pthread_mutex_unlock(&philo->table->mutex_check_eat);
 	sleep_better(philo->table->input.time_to_eat);
 	pthread_mutex_unlock(philo->mutex_l_fork);
@@ -93,7 +91,14 @@ static void	philo_sleep(struct s_philo *philo)
 
 static void	philo_think(struct s_philo *philo)
 {
+	t_milliseconds	time_to_think;
+
 	print_status(philo, "is thinking");
+	pthread_mutex_lock(&philo->table->mutex_check_eat);
+	time_to_think = (philo->table->input.time_to_die - \
+		time_passed(philo->last_eat)) * 7 / 10;
+	pthread_mutex_unlock(&philo->table->mutex_check_eat);
+	sleep_better(time_to_think);
 	philo->status = THINKING;
 }
 
@@ -101,7 +106,6 @@ void	philo_activity(struct s_philo *philo)
 {
 	if (philo->status == THINKING)
 	{
-		// philo_eat(philo);
 		if (philo->id % 2 == 1)
 		{
 			philo_odd_eat(philo);
@@ -112,7 +116,6 @@ void	philo_activity(struct s_philo *philo)
 			philo_even_eat(philo);
 			return ;
 		}
-		// return ;
 	}
 	if (philo->status == EATING)
 	{

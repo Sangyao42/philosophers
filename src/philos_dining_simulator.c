@@ -6,23 +6,36 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 14:25:17 by sawang            #+#    #+#             */
-/*   Updated: 2023/04/27 18:01:01 by sawang           ###   ########.fr       */
+/*   Updated: 2023/04/27 22:30:30 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-static t_kill_status	check_kill_status(struct s_philo *philo)
+// static t_kill_status	check_kill_status(struct s_philo *philo)
+// {
+// 	pthread_mutex_lock(&philo->table->traffic_light.mutex_kill);
+// 	if (philo->table->traffic_light.kill == KILL)
+// 	{
+// 		pthread_mutex_unlock(&philo->table->traffic_light.mutex_kill);
+// 		return (KILL);
+// 	}
+// 	pthread_mutex_unlock(&philo->table->traffic_light.mutex_kill);
+// 	return (INITIALIZED_KILL);
+// 	// return (philo->table->traffic_light.kill);
+// }
+
+static bool	check_kill_status(struct s_philo *philo)
 {
 	pthread_mutex_lock(&philo->table->traffic_light.mutex_kill);
-	// if (philo->table->traffic_light.kill == KILL)
-	// {
-	// 	pthread_mutex_unlock(&philo->table->traffic_light.mutex_kill);
-	// 	return (KILL);
-	// }
-	// pthread_mutex_unlock(&philo->table->traffic_light.mutex_kill);
-	// return (INITIALIZED_KILL);
-	return (philo->table->traffic_light.kill);
+	if (philo->table->traffic_light.kill == KILL)
+	{
+		pthread_mutex_unlock(&philo->table->traffic_light.mutex_kill);
+		return (true);
+	}
+	pthread_mutex_unlock(&philo->table->traffic_light.mutex_kill);
+	return (false);
+	// return (philo->table->traffic_light.kill);
 }
 
 static void	*philo_routine(struct s_philo *philo)
@@ -31,24 +44,21 @@ static void	*philo_routine(struct s_philo *philo)
 	if (philo->table->traffic_light.start != START)
 	{
 		pthread_mutex_unlock(&philo->table->traffic_light.mutex_start);
-		return (NULL);//???
+		return (NULL);
 	}
 	pthread_mutex_unlock(&philo->table->traffic_light.mutex_start);
 	philo->start_time = time_now();
-	philo->last_eat = time_now();
+	pthread_mutex_lock(&philo->table->mutex_check_eat);
+	philo->last_eat = 0;
+	pthread_mutex_unlock(&philo->table->mutex_check_eat);
 	philo->status = THINKING;
-	// printf("philo %d KILL SIGNAL RECEIVED?? %d\n", philo->id, philo->table->traffic_light.kill);
-	while (1)
+	while (check_kill_status(philo) == false)
 	{
-		while (check_kill_status(philo) != KILL)
-		{
-			pthread_mutex_unlock(&philo->table->traffic_light.mutex_kill);
-			philo_activity(philo);
-		}
 		pthread_mutex_unlock(&philo->table->traffic_light.mutex_kill);
-		// philo_die(philo);
-		return (NULL);
+		philo_activity(philo);
 	}
+	pthread_mutex_unlock(&philo->table->traffic_light.mutex_kill);
+	return (NULL);
 }
 
 // bool	philo_dining_simulation(struct s_table *table)
@@ -88,22 +98,14 @@ bool	philo_dining_simulation(struct s_table *table)
 	while (i < table->input.num_of_philos)
 	{
 		if (pthread_create(&table->philo_holding.philo_thrs[i], NULL, \
-		(void *(*)(void *)) &philo_routine, (void *)&table->philo_holding.philos[i]) != 0)
-			return (printf("Error: pthread_create of philo failed"), \
-				pthread_mutex_unlock(&table->traffic_light.mutex_start), \
-				philo_threads_join(table, i), \
-				mutex_destroy_and_free(table, table->input.num_of_philos), \
-				EXIT_FAILURE);
+		(void *(*)(void *)) philo_routine, \
+		(void *)&table->philo_holding.philos[i]) != 0)
+			return (exit_when_pthr_create_failed(table, i), EXIT_FAILURE);
 		i++;
 	}
-	if (pthread_create(&table->death, NULL, (void *(*)(void *)) &death_routine, (void *)table) != 0)
-		return (printf("Error: pthread_create of death failed"), \
-		// table->traffic_light.start = INITIALIZED_START,
-		pthread_mutex_unlock(&table->traffic_light.mutex_start), \
-		philo_threads_join(table, i), \
-		mutex_destroy_and_free(table, table->input.num_of_philos), \
-		EXIT_FAILURE);
-	// if (i == table->input.num_of_philos)
+	if (pthread_create(&table->death, NULL, \
+	(void *(*)(void *)) death_routine, (void *)table) != 0)
+		return (exit_when_pthr_create_failed(table, i), EXIT_FAILURE);
 	table->traffic_light.start = START;
 	pthread_mutex_unlock(&table->traffic_light.mutex_start);
 	// philo_threads_join(table, i);

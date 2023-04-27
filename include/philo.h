@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 16:26:02 by sawang            #+#    #+#             */
-/*   Updated: 2023/04/27 16:09:22 by sawang           ###   ########.fr       */
+/*   Updated: 2023/04/27 22:15:05 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,10 +140,11 @@ int				lonely_philo_simulator(struct s_table *table);
 /**
  * error_handler
 */
-void			mutex_destroy_and_free_when_init(struct s_table *table, \
-	unsigned int philo_cnt);
+// void			mutex_destroy_and_free_when_init(struct s_table *table, unsigned int philo_cnt);
 void			mutex_destroy_and_free(struct s_table *table, \
 	unsigned int philo_cnt);
+void			exit_when_pthr_create_failed(struct s_table *table, \
+	unsigned int philo_thr_cnt);
 
 /**
  * timer

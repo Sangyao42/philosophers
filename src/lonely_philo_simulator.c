@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:06:10 by sawang            #+#    #+#             */
-/*   Updated: 2023/04/26 21:48:59 by sawang           ###   ########.fr       */
+/*   Updated: 2023/04/27 22:41:21 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	*lonely_philo_routine(struct s_philo *philo)
 int	lonely_philo_simulator(struct s_table *table)
 {
 	if (pthread_create(&table->philo_holding.philo_thrs[0], NULL, \
-		(void *(*)(void *)) &lonely_philo_routine, \
+		(void *(*)(void *)) lonely_philo_routine, \
 		(void *) &table->philo_holding.philos[0]) != 0)
 		return (printf("Error: pthread_create failed"), \
 			mutex_destroy_and_free(table, 1), EXIT_FAILURE);

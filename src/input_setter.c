@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 22:37:27 by sawang            #+#    #+#             */
-/*   Updated: 2023/04/27 16:43:55 by sawang           ###   ########.fr       */
+/*   Updated: 2023/04/27 22:42:04 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,10 +91,5 @@ bool	set_input(struct s_table *table, int argc, char *argv[])
 		table->input.num_of_must_eat = philo_atoi(argv[5]);
 	else
 		table->input.num_of_must_eat = UINT_MAX;
-	// printf("table->input.num_of_philos = %d\n", table->input.num_of_philos);
-	// printf("table->input.time_to_die = %lu\n", table->input.time_to_die);
-	// printf("table->input.time_to_eat = %lu\n", table->input.time_to_eat);
-	// printf("table->input.time_to_sleep = %lu\n", table->input.time_to_sleep);
-	// printf("table->input.num_of_must_eat = %u\n", table->input.num_of_must_eat);
 	return (EXIT_SUCCESS);
 }
