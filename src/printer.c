@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 15:42:42 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/07 20:04:59 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/07 20:35:31 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,9 @@
 
 void	print_status(struct s_philo *philo, char *doing)
 {
+	if (philo->table->input.time_to_die == 0 \
+		|| philo->table->input.num_of_must_eat == 0)
+		return ;
 	pthread_mutex_lock(&philo->table->traffic_light.mutex_kill);
 	if (philo->table->traffic_light.kill == KILL)
 	{
