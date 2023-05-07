@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 19:08:03 by sawang            #+#    #+#             */
-/*   Updated: 2023/04/27 22:40:02 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/07 20:10:14 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,6 @@ void	sit_philos(struct s_table *table)
 		table->philo_holding.philos[i].mutex_r_fork = \
 			&table->philo_holding.mutex_forks[(i + 1) \
 			% table->input.num_of_philos];
-		// table->philo_holding.philos[i]. last_eat = time_now();
 		table->philo_holding.philos[i].eat_cnt = 0;
 		table->philo_holding.philos[i].table = table;
 		i++;

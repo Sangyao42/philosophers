@@ -6,11 +6,12 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 21:21:11 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/07 16:52:16 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/07 20:10:39 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+#include <stdint.h>
 
 int	philo_strcmp(char *s1, char *s2)
 {
@@ -57,17 +58,11 @@ unsigned long	philo_atoi(const char *str)
 	int				i;
 	unsigned long	value;
 
-	// if (!*str)
-	// 	return (EXIT_FAILURE);
 	i = 0;
 	value = 0;
 	while (str[i])
 	{
-		// if (str[i] < '0' || str[i] > '9')
-		// 	return (EXIT_FAILURE);
 		value = value * 10 + (str[i] - '0');
-		// if (value > UINT_MAX)
-		// 	return (EXIT_FAILURE);
 		i++;
 	}
 	return (value);

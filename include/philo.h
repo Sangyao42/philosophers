@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 16:26:02 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/07 17:00:55 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/07 20:11:40 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,6 @@ typedef unsigned long	t_milliseconds;
 
 typedef enum e_philo_status
 {
-	FORKING,
 	EATING,
 	SLEEPING,
 	THINKING
@@ -62,7 +61,6 @@ typedef enum e_start_status
 {
 	UNINITIALIZED_START,
 	INITIALIZED_START,
-	// NOT_STARTED,
 	START
 }			t_start_status;
 
@@ -70,7 +68,6 @@ typedef enum e_kill_status
 {
 	UNINITIALIZED_KILL,
 	INITIALIZED_KILL,
-	// ALIVE,
 	KILL
 }			t_kill_status;
 
@@ -112,7 +109,6 @@ void			*death_routine(struct s_table *table);
 */
 bool			philo_dining_simulation(struct s_table *table);
 void			philo_activity(struct s_philo *philo);
-// void	philo_activity(struct s_philo *philo, bool *is_alive);
 void			philo_threads_join(struct s_table *table, \
 	unsigned int philo_thr_cnt);
 /**
@@ -123,7 +119,6 @@ int				lonely_philo_simulator(struct s_table *table);
 /**
  * error_handler
 */
-// void			mutex_destroy_and_free_when_init(struct s_table *table, unsigned int philo_cnt);
 void			mutex_destroy_and_free(struct s_table *table, \
 	unsigned int philo_cnt);
 void			exit_when_pthr_create_failed(struct s_table *table, \

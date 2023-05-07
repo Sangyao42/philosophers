@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 22:37:27 by sawang            #+#    #+#             */
-/*   Updated: 2023/04/27 22:42:04 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/07 19:39:56 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,21 +56,16 @@ static bool	is_valid_ulong(const char *str)
 
 static bool	check_input(int argc, char *argv[])
 {
-	int	i;
-
 	if (argc < 5 || argc > 6)
 		return (EXIT_FAILURE);
-	i = 1;
-	if (is_valid_uint(argv[i]) == EXIT_FAILURE)
+	if (is_valid_uint(argv[1]) || \
+		is_valid_ulong(argv[2]) || \
+		is_valid_ulong(argv[3]) || \
+		is_valid_ulong(argv[4]))
 		return (EXIT_FAILURE);
-	while (++i < argc && argc == 5)
-	{
-		if (is_valid_ulong(argv[i]) == EXIT_FAILURE)
-			return (EXIT_FAILURE);
-	}
 	if (argc == 6)
 	{
-		if (is_valid_uint(argv[i]) == EXIT_FAILURE)
+		if (is_valid_uint(argv[5]))
 			return (EXIT_FAILURE);
 	}
 	return (EXIT_SUCCESS);
@@ -79,7 +74,7 @@ static bool	check_input(int argc, char *argv[])
 bool	set_input(struct s_table *table, int argc, char *argv[])
 {
 	if (check_input(argc, argv) == EXIT_FAILURE)
-		return (printf("Error: Invalid input:"), EXIT_FAILURE);
+		return (printf("Error: Invalid input"), EXIT_FAILURE);
 	if (philo_atoi(argv[1]) < 1)
 		return (printf("Error: Number of philosophers must be at least 1"),
 			EXIT_FAILURE);
