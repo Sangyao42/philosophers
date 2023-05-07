@@ -6,11 +6,30 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 21:21:11 by sawang            #+#    #+#             */
-/*   Updated: 2023/04/27 16:29:08 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/07 16:52:16 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+int	philo_strcmp(char *s1, char *s2)
+{
+	int	i;
+	int	ret_val;
+
+	i = 0;
+	ret_val = 0;
+	while (s1[i] || s2[i])
+	{
+		ret_val = s1[i] - s2[i];
+		if (ret_val != 0)
+			return (ret_val);
+		else
+			ret_val = 0;
+		i++;
+	}
+	return (ret_val);
+}
 
 void	*ft_calloc(size_t count, size_t size)
 {

@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 15:57:21 by sawang            #+#    #+#             */
-/*   Updated: 2023/04/27 22:28:19 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/07 17:04:53 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,25 @@
 // 	}
 // }
 
+// static void	philo_fork(struct s_philo *philo)
+// {
+// 	if (philo->id % 2 == 1)
+// 	{
+// 		pthread_mutex_lock(philo->mutex_l_fork);
+// 		print_status(philo, "has taken a fork");
+// 		pthread_mutex_lock(philo->mutex_r_fork);
+// 		print_status(philo, "has taken a fork");
+// 	}
+// 	else
+// 	{
+// 		pthread_mutex_lock(philo->mutex_r_fork);
+// 		print_status(philo, "has taken a fork");
+// 		pthread_mutex_lock(philo->mutex_l_fork);
+// 		print_status(philo, "has taken a fork");
+// 	}
+// 	philo->status = FORKING;
+// }
+
 static void	philo_odd_eat(struct s_philo *philo)
 {
 	pthread_mutex_lock(philo->mutex_l_fork);
@@ -82,6 +101,27 @@ static void	philo_even_eat(struct s_philo *philo)
 	philo->status = EATING;
 }
 
+// static void	philo_eat(struct s_philo *philo)
+// {
+// 	print_status(philo, "is eating");
+// 	pthread_mutex_lock(&philo->table->mutex_check_eat);
+// 	philo->eat_cnt += 1;
+// 	philo->last_eat = time_now();
+// 	pthread_mutex_unlock(&philo->table->mutex_check_eat);
+// 	sleep_better(philo->table->input.time_to_eat);
+// 	if (philo->id % 2 == 1)
+// 	{
+// 		pthread_mutex_unlock(philo->mutex_r_fork);
+// 		pthread_mutex_unlock(philo->mutex_l_fork);
+// 	}
+// 	else
+// 	{
+// 		pthread_mutex_unlock(philo->mutex_l_fork);
+// 		pthread_mutex_unlock(philo->mutex_r_fork);
+// 	}
+// 	philo->status = EATING;
+// }
+
 static void	philo_sleep(struct s_philo *philo)
 {
 	print_status(philo, "is sleeping");
@@ -102,6 +142,19 @@ static void	philo_think(struct s_philo *philo)
 	philo->status = THINKING;
 }
 
+// void	philo_activity(struct s_philo *philo)
+// {
+// 	if (philo->status == THINKING)
+// 		philo_fork(philo);
+// 	else if (philo->status == FORKING)
+// 		philo_eat(philo);
+// 	else if (philo->status == EATING)
+// 		philo_sleep(philo);
+// 	else if (philo->status == SLEEPING)
+// 		philo_think(philo);
+// 	return ;
+// }
+
 void	philo_activity(struct s_philo *philo)
 {
 	if (philo->status == THINKING)
@@ -116,7 +169,14 @@ void	philo_activity(struct s_philo *philo)
 			philo_even_eat(philo);
 			return ;
 		}
+		// philo_fork(philo);
+		return ;
 	}
+	// if (philo->status == FORKING)
+	// {
+	// 	philo_eat(philo);
+	// 	return ;
+	// }
 	if (philo->status == EATING)
 	{
 		philo_sleep(philo);

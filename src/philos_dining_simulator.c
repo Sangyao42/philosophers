@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 14:25:17 by sawang            #+#    #+#             */
-/*   Updated: 2023/04/27 22:30:30 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/07 17:17:23 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,16 @@ static bool	check_kill_status(struct s_philo *philo)
 	// return (philo->table->traffic_light.kill);
 }
 
+static void	philo_die(struct s_philo *philo)
+{
+	if (philo->status == FORKING)
+	{
+		pthread_mutex_unlock(philo->mutex_l_fork);
+		pthread_mutex_unlock(philo->mutex_r_fork);
+	}
+	return ;
+}
+
 static void	*philo_routine(struct s_philo *philo)
 {
 	pthread_mutex_lock(&philo->table->traffic_light.mutex_start);
@@ -52,12 +62,15 @@ static void	*philo_routine(struct s_philo *philo)
 	philo->last_eat = 0;
 	pthread_mutex_unlock(&philo->table->mutex_check_eat);
 	philo->status = THINKING;
+	if (philo->id % 2 == 1)
+		sleep_better(philo->table->input.time_to_eat / 2);
 	while (check_kill_status(philo) == false)
 	{
 		pthread_mutex_unlock(&philo->table->traffic_light.mutex_kill);
 		philo_activity(philo);
 	}
 	pthread_mutex_unlock(&philo->table->traffic_light.mutex_kill);
+	philo_die(philo);
 	return (NULL);
 }
 

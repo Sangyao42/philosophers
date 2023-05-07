@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 16:26:02 by sawang            #+#    #+#             */
-/*   Updated: 2023/04/27 22:15:05 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/07 17:00:55 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,31 +20,14 @@
 # include <limits.h>
 # include <stdio.h>
 
-/**
- * mutex for print
- * mutex for left fork and right fork
- * mutex for dead or not
- * mutex for eat count?
-*/
-
-// typedef struct s_input
-// {
-// 	unsigned int	num_of_philos;
-// 	unsigned int	time_to_die;
-// 	unsigned int	time_to_eat;
-// 	unsigned int	time_to_sleep;
-// 	unsigned int	num_of_must_eat;
-// }				t_input;
-
 typedef unsigned long	t_milliseconds;
 
 typedef enum e_philo_status
 {
-	THINKING,
+	FORKING,
 	EATING,
 	SLEEPING,
-	// FORKING,?
-	DIED
+	THINKING
 }				t_philo_status;
 
 struct s_input
@@ -61,7 +44,6 @@ struct s_philo
 	unsigned int	id;
 	pthread_mutex_t	*mutex_l_fork;
 	pthread_mutex_t	*mutex_r_fork;
-	// status
 	t_milliseconds	start_time;
 	t_philo_status	status;
 	t_milliseconds	last_eat;
@@ -80,7 +62,7 @@ typedef enum e_start_status
 {
 	UNINITIALIZED_START,
 	INITIALIZED_START,
-	NOT_STARTED,
+	// NOT_STARTED,
 	START
 }			t_start_status;
 
@@ -88,7 +70,7 @@ typedef enum e_kill_status
 {
 	UNINITIALIZED_KILL,
 	INITIALIZED_KILL,
-	ALIVE,
+	// ALIVE,
 	KILL
 }			t_kill_status;
 
@@ -130,6 +112,7 @@ void			*death_routine(struct s_table *table);
 */
 bool			philo_dining_simulation(struct s_table *table);
 void			philo_activity(struct s_philo *philo);
+// void	philo_activity(struct s_philo *philo, bool *is_alive);
 void			philo_threads_join(struct s_table *table, \
 	unsigned int philo_thr_cnt);
 /**
@@ -161,6 +144,7 @@ void			print_status(struct s_philo *philo, char *doing);
 /**
  * utils
 */
+int				philo_strcmp(char *s1, char *s2);
 void			*ft_calloc(size_t count, size_t size);
 unsigned long	philo_atoi(const char *str);
 
