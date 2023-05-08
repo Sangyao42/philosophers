@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 14:25:17 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/07 20:09:58 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/08 14:29:39 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ static void	*philo_routine(struct s_philo *philo)
 		return (NULL);
 	}
 	pthread_mutex_unlock(&philo->table->traffic_light.mutex_start);
-	philo->start_time = time_now();
+	// philo->start_time = time_now();
 	pthread_mutex_lock(&philo->table->mutex_check_eat);
 	philo->last_eat = 0;
 	pthread_mutex_unlock(&philo->table->mutex_check_eat);
@@ -63,6 +63,7 @@ bool	philo_dining_simulation(struct s_table *table)
 	(void *(*)(void *)) death_routine, (void *)table) != 0)
 		return (exit_when_pthr_create_failed(table, i), EXIT_FAILURE);
 	table->traffic_light.start = START;
+	table->start_time = time_now();
 	pthread_mutex_unlock(&table->traffic_light.mutex_start);
 	pthread_join(table->death, NULL);
 	mutex_destroy_and_free(table, table->input.num_of_philos);

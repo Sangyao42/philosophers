@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 18:15:01 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/07 20:10:57 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/08 15:40:05 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ void	*death_routine(struct s_table *table)
 				pthread_mutex_lock(&table->traffic_light.mutex_kill);
 				table->traffic_light.kill = KILL;
 				pthread_mutex_unlock(&table->traffic_light.mutex_kill);
+				print_status(&table->philo_holding.philos[i], "died");
 				philo_threads_join(table, table->input.num_of_philos);
 				return (NULL);
 			}
