@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 16:26:02 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/07 20:11:40 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/08 16:18:13 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,11 @@ struct s_philo
 	unsigned int	id;
 	pthread_mutex_t	*mutex_l_fork;
 	pthread_mutex_t	*mutex_r_fork;
-	t_milliseconds	start_time;
+	// t_milliseconds	start_time;
 	t_philo_status	status;
 	t_milliseconds	last_eat;
 	unsigned int	eat_cnt;
+	pthread_mutex_t	*mutex_check_eat;
 	struct s_table	*table;
 };
 
@@ -55,6 +56,7 @@ struct s_philo_holding
 	struct s_philo	*philos;
 	pthread_t		*philo_thrs;
 	pthread_mutex_t	*mutex_forks;
+	pthread_mutex_t	*mutex_array_check_eat;
 };
 
 typedef enum e_start_status
@@ -82,9 +84,10 @@ struct s_traffic_light
 struct s_table
 {
 	struct s_input			input;
+	t_milliseconds			start_time;
 	struct s_philo_holding	philo_holding;
 	pthread_mutex_t			mutex_print;
-	pthread_mutex_t			mutex_check_eat;
+	// pthread_mutex_t			mutex_check_eat;
 	pthread_t				death;
 	struct s_traffic_light	traffic_light;
 };
