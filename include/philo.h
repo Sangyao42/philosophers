@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 16:26:02 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/08 16:18:13 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/09 16:06:37 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ struct s_philo
 	unsigned int	id;
 	pthread_mutex_t	*mutex_l_fork;
 	pthread_mutex_t	*mutex_r_fork;
-	// t_milliseconds	start_time;
 	t_philo_status	status;
 	t_milliseconds	last_eat;
 	unsigned int	eat_cnt;
@@ -87,7 +86,6 @@ struct s_table
 	t_milliseconds			start_time;
 	struct s_philo_holding	philo_holding;
 	pthread_mutex_t			mutex_print;
-	// pthread_mutex_t			mutex_check_eat;
 	pthread_t				death;
 	struct s_traffic_light	traffic_light;
 };
