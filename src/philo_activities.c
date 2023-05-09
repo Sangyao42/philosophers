@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 15:57:21 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/09 22:42:23 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/09 22:59:49 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,8 +59,8 @@ static void	philo_think(struct s_philo *philo)
 
 	print_status(philo, "is thinking");
 	pthread_mutex_lock(philo->mutex_check_eat);
-	pthread_mutex_unlock(philo->mutex_check_eat);
 	time_to_think = time_passed(philo->last_eat);
+	pthread_mutex_unlock(philo->mutex_check_eat);
 	if (philo->table->input.time_to_die > time_to_think)
 	{
 		time_to_think \
