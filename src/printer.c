@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 15:42:42 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/09 16:04:56 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/09 21:51:14 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,11 @@ void	print_status(struct s_philo *philo, char *doing)
 	if (philo->table->traffic_light.kill == KILL)
 	{
 		pthread_mutex_unlock(&philo->table->traffic_light.mutex_kill);
-		if (philo_strcmp(doing, "all philos ate enough") == 0)
-			printf("%lu %s\n", time_passed(philo->table->start_time), doing);
-		else if (philo_strcmp(doing, "died") == 0)
+		if (philo_strcmp(doing, "died") == 0)
 			printf("%lu %d %s\n", time_passed(philo->table->start_time), \
 				philo->id, doing);
+		if (philo_strcmp(doing, "all philos ate enough") == 0)
+			printf("%lu %s\n", time_passed(philo->table->start_time), doing);
 		pthread_mutex_unlock(&philo->table->mutex_print);
 		return ;
 	}

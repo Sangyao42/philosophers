@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 12:14:04 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/09 16:04:13 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/09 17:57:01 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,11 +36,12 @@ void	mutex_destroy_and_free(struct s_table *table, \
 		free(table->philo_holding.mutex_forks);
 }
 
-void	exit_when_pthr_create_failed(struct s_table *table, \
+bool	exit_when_pthr_create_failed(struct s_table *table, \
 	unsigned int philo_thr_cnt)
 {
 	printf("Error: pthread_create of death failed");
 	pthread_mutex_unlock(&table->traffic_light.mutex_start);
 	philo_threads_join(table, philo_thr_cnt);
 	mutex_destroy_and_free(table, 2 * table->input.num_of_philos);
+	return (EXIT_FAILURE);
 }

@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/23 22:37:27 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/07 20:44:03 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/09 17:50:05 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,10 @@ static bool	check_input(int argc, char *argv[])
 bool	set_input(struct s_table *table, int argc, char *argv[])
 {
 	if (check_input(argc, argv) == EXIT_FAILURE)
-		return (printf("Error: Invalid input"), EXIT_FAILURE);
+	{
+		printf("Error: Invalid input");
+		return (EXIT_FAILURE);
+	}
 	table->input.num_of_philos = philo_atoi(argv[1]);
 	table->input.time_to_die = philo_atoi(argv[2]);
 	table->input.time_to_eat = philo_atoi(argv[3]);
@@ -84,7 +87,9 @@ bool	set_input(struct s_table *table, int argc, char *argv[])
 	else
 		table->input.num_of_must_eat = UINT_MAX;
 	if (table->input.num_of_philos < 1)
-		return (printf("Error: Number of philosophers must be at least 1"),
-			EXIT_FAILURE);
+	{
+		printf("Error: Number of philosophers must be at least 1");
+		return (EXIT_FAILURE);
+	}
 	return (EXIT_SUCCESS);
 }

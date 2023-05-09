@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 19:08:03 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/09 16:05:16 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/09 21:50:31 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,7 +88,10 @@ bool	set_table(struct s_table *table, int argc, char *argv[])
 	if (pthread_mutex_init(&table->mutex_print, NULL) != 0)
 		return (printf("Error: Mutex init failed"), EXIT_FAILURE);
 	if (set_traffic_light(table) == EXIT_FAILURE)
-		return (mutex_destroy_and_free(table, 0), EXIT_FAILURE);
+	{
+		mutex_destroy_and_free(table, 0);
+		return (EXIT_FAILURE);
+	}
 	mutex_cnt = set_philo_holding(table);
 	if (mutex_cnt != (2 * table->input.num_of_philos))
 	{

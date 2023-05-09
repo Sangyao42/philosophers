@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 14:25:17 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/09 16:04:31 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/09 22:42:39 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ static void	*philo_routine(struct s_philo *philo)
 	pthread_mutex_unlock(philo->mutex_check_eat);
 	philo->status = THINKING;
 	if (philo->id % 2 == 1)
-		sleep_better(philo->table->input.time_to_eat / 2);
+		sleep_better(philo->table->input.time_to_eat / 2, philo->table);
 	while (check_kill_status(philo) == false)
 		philo_activity(philo);
 	return (NULL);
@@ -55,15 +55,16 @@ bool	philo_dining_simulation(struct s_table *table)
 		if (pthread_create(&table->philo_holding.philo_thrs[i], NULL, \
 		(void *(*)(void *)) philo_routine, \
 		(void *)&table->philo_holding.philos[i]) != 0)
-			return (exit_when_pthr_create_failed(table, i), EXIT_FAILURE);
+			return (exit_when_pthr_create_failed(table, i));
 		i++;
 	}
 	if (pthread_create(&table->death, NULL, \
 	(void *(*)(void *)) death_routine, (void *)table) != 0)
-		return (exit_when_pthr_create_failed(table, i), EXIT_FAILURE);
+		return (exit_when_pthr_create_failed(table, i));
 	table->traffic_light.start = START;
 	table->start_time = time_now();
 	pthread_mutex_unlock(&table->traffic_light.mutex_start);
+	philo_threads_join(table, table->input.num_of_philos);
 	pthread_join(table->death, NULL);
 	mutex_destroy_and_free(table, table->input.num_of_philos);
 	return (EXIT_SUCCESS);
