@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 14:25:17 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/09 13:46:45 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/09 12:08:35 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ static void	*philo_routine(struct s_philo *philo)
 		return (NULL);
 	}
 	pthread_mutex_unlock(&philo->table->traffic_light.mutex_start);
+	// philo->start_time = time_now();
 	pthread_mutex_lock(philo->mutex_check_eat);
 	philo->last_eat = 0;
 	pthread_mutex_unlock(philo->mutex_check_eat);

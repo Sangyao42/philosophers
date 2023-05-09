@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/25 19:06:10 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/09 13:46:33 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/08 15:13:09 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 static void	*lonely_philo_routine(struct s_philo *philo)
 {
+	// philo->start_time = time_now();
 	philo->table->start_time = time_now();
 	pthread_mutex_lock(philo->mutex_l_fork);
 	print_status(philo, "has taken a fork");

@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 19:08:03 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/09 13:48:05 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/09 12:00:12 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,40 @@ bool	set_traffic_light(struct s_table *table)
 	return (EXIT_SUCCESS);
 }
 
+//malloc the mutexes (fork and check_eat) at once??
+// and init them at once as well
+// check if *2 needed
+// unsigned int	set_philo_holding(struct s_table *table)
+// {
+// 	unsigned int	i;
+
+// 	i = 0;
+// 	table->philo_holding.philos = \
+// 		ft_calloc(table->input.num_of_philos, (sizeof(struct s_philo)));
+// 	table->philo_holding.philo_thrs = \
+// 		ft_calloc(table->input.num_of_philos, (sizeof(pthread_t)));
+// 	table->philo_holding.mutex_forks = \
+// 		ft_calloc(table->input.num_of_philos, (sizeof(pthread_mutex_t)));
+// 	// table->philo_holding.mutex_array_check_eat = \
+// 	// 	ft_calloc(table->input.num_of_philos, (sizeof(pthread_mutex_t)));
+// 	if (!table->philo_holding.philos || !table->philo_holding.philo_thrs \
+// 		|| !table->philo_holding.mutex_forks || \
+// 		!table->philo_holding.mutex_array_check_eat)
+// 		return (printf("Error: Malloc failed"), i);
+// 	while (i < table->input.num_of_philos)
+// 	{
+// 		if (pthread_mutex_init(&table->philo_holding.mutex_forks[i], NULL) \
+// 			!= 0)
+// 			return (printf("Error: %dth forks Mutex init failed", i), i);
+// 		i++;
+// 	}
+// 	return (i);
+// }
+
 unsigned int	set_philo_holding(struct s_table *table)
 {
 	unsigned int	i;
+	unsigned int	mutex_cnt;
 
 	i = 0;
 	table->philo_holding.philos = \
@@ -45,14 +76,15 @@ unsigned int	set_philo_holding(struct s_table *table)
 	if (!table->philo_holding.philos || !table->philo_holding.philo_thrs \
 		|| !table->philo_holding.mutex_forks)
 		return (printf("Error: Malloc failed"), i);
-	while (i < (2 * table->input.num_of_philos))
+	mutex_cnt = 2 * table->input.num_of_philos;
+	while (i < mutex_cnt)
 	{
 		if (pthread_mutex_init(&table->philo_holding.mutex_forks[i], NULL) != 0)
 			return (printf("Error: %dth forks Mutex init failed", i), i);
 		i++;
 	}
-	table->philo_holding.mutex_array_check_eat \
-		= table->philo_holding.mutex_forks + table->input.num_of_philos;
+	table->philo_holding.mutex_array_check_eat =
+		table->philo_holding.mutex_forks + table->input.num_of_philos;
 	return (i);
 }
 
