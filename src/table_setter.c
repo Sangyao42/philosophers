@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/21 19:08:03 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/09 21:50:31 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/10 13:59:17 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,8 @@ unsigned int	set_philo_holding(struct s_table *table)
 	if (!table->philo_holding.philos || !table->philo_holding.philo_thrs \
 		|| !table->philo_holding.mutex_forks)
 		return (printf("Error: Malloc failed"), i);
+	table->philo_holding.mutex_array_check_eat
+		= table->philo_holding.mutex_forks + table->input.num_of_philos;
 	mutex_cnt = 2 * table->input.num_of_philos;
 	while (i < mutex_cnt)
 	{
@@ -53,8 +55,6 @@ unsigned int	set_philo_holding(struct s_table *table)
 			return (printf("Error: %dth forks Mutex init failed", i), i);
 		i++;
 	}
-	table->philo_holding.mutex_array_check_eat
-		= table->philo_holding.mutex_forks + table->input.num_of_philos;
 	return (i);
 }
 

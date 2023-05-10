@@ -1,7 +1,7 @@
 NAME := philo
 CC := cc
 CFLAGS := -Wall -Werror -Wextra
-# CFLAGS += -fsanitize=address -g
+CFLAGS += -fsanitize=address -g
 # CFLAGS += -fsanitize=thread -g
 SRC_DIR := src/
 OBJ_DIR := obj/

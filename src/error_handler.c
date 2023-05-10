@@ -6,7 +6,7 @@
 /*   By: sawang <sawang@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/04/24 12:14:04 by sawang            #+#    #+#             */
-/*   Updated: 2023/05/09 17:57:01 by sawang           ###   ########.fr       */
+/*   Updated: 2023/05/10 13:59:07 by sawang           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ void	mutex_destroy_and_free(struct s_table *table, \
 	if (table->philo_holding.philo_thrs != NULL)
 		free(table->philo_holding.philo_thrs);
 	if (table->philo_holding.mutex_forks != NULL)
+	{
+		table->philo_holding.mutex_array_check_eat = NULL;
 		free(table->philo_holding.mutex_forks);
+	}
 }
 
 bool	exit_when_pthr_create_failed(struct s_table *table, \
